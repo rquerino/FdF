@@ -24,7 +24,7 @@
 */
 
 
-void    ft_minilibx(void *mlx_ptr, char **values, t_point size)
+void    ft_minilibx(void *mlx_ptr, t_point size)
 {
     int px;
     int py;
@@ -39,39 +39,53 @@ void    ft_minilibx(void *mlx_ptr, char **values, t_point size)
 
 }
 
-void    ft_printvalues(char **values)
+void    ft_printmap(int **map)
 {
     int i;
+    int j;
 
     i = 0;
-    while (values[i])
+    j = 0;
+    while (map[i])
     {
-        printf("%s\n", values[i]);
+        while (map[i][j])
+        {
+            printf("%d ", map[i][j]);
+            j++;
+        }
+        j = 0;
         i++;
+        printf("\n");
     }
 }
 
 int     main(int argc, char **argv)
 {
-    void *mlx_ptr;
+    //void *mlx_ptr;
     int fd;
-    char **values;
-    t_point size;
+    int **map;
+    //t_point size;
 
     if (argc == 2)
     {
+        map = NULL;
+        /*
         if (fd != -1)
         {
             fd = open(argv[1], O_RDONLY);
-            values = ft_readmap(fd);
+            map = ft_readmap(fd);
             //size = malloc(sizeof(size));
             size = ft_mapsize(values);
             ft_printvalues(values);
             mlx_ptr = mlx_init();
             ft_minilibx(mlx_ptr, values, size);
-        }
+        } */
+        fd = open(argv[1], O_RDONLY);
+        map = ft_readmap(fd, map);
+        ft_printmap(map);
     }
     else
         ft_putstr("Please use a valid file.\n");
+    
     return (0);
 }

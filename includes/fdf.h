@@ -18,16 +18,44 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-typedef struct	s_point
+# define WIDTH = 1920
+# define HEIGHT = 1080
+
+typedef struct	s_mlx
 {
-	int	x;
-	int	y;
-}				t_point;
+	void	*init;
+	void	*win;
+	void	*img;
+}		t_mlx;
+
+typedef struct	s_color
+{
+	int	R;
+	int	G;
+	int	B;
+}		t_color;
+
+typedef struct	s_map
+{
+	int	width;
+	int	height;
+	int	z_max;
+	int	z_min;
+	int	**values;
+}				t_map;
+
+typedef struct	s_fdf
+{
+	t_mlx	mlx;
+	t_map	map;
+	t_color	color;
+}				t_fdf;
+
 
 /*
 ** Functions
 */
 
-char     **ft_readmap(int fd);
+int     **ft_readmap(int fd, int **map);
 t_point     ft_mapsize(char **values);
 #endif
