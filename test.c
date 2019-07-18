@@ -6,11 +6,11 @@
 /*   By: rquerino <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 10:59:48 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/10 11:49:41 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/13 10:40:05 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx/mlx.h"
+#include "minilibx_macos/mlx.h"
 #include <unistd.h>
 
 /*

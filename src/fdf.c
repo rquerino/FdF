@@ -46,11 +46,11 @@ void    ft_printvalues(t_fdf *fdf)
 
     i = 0;
     j = 0;
-    while (fdf->map.values[i])
+    while (i < 11)
     {
-        while (fdf->map.values[i][j])
+        while (j < 18)
         {
-            printf("%d ", fdf->map.values[i][j]);
+            printf("%02d ,", fdf->map->values[i][j]);
             j++;
         }
         j = 0;
@@ -65,10 +65,12 @@ int     main(int ac, char **av)
 
     if (ac == 2)
     {
-        fdf = malloc(sizeof(fdf));
+        fdf = malloc(sizeof(t_fdf));
+        fdf->map = malloc(sizeof(t_map));
         ft_readmap(fdf, av[1]);
         ft_printvalues(fdf);
-
+        printf("width: %d, height: %d\n", fdf->map->width, fdf->map->height);
+        ft_freeall(fdf);
     }
     else
         ft_putstr("Please use a valid file.\n");

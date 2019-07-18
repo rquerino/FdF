@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map->c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+#include <stdio.h>
 
 /*
 ** Counts how many numbers are in a row of the file.
 ** Returns width.
 */
 
-int	ft_getwidth(char *line)
+int		ft_getwidth(char *line)
 {
 	int	i;
 	int	count_nbr;
@@ -38,12 +39,12 @@ int	ft_getwidth(char *line)
 }
 
 /*
-** Function that counts how many lines in the map.
+** Function that counts how many lines in the map->
 ** Puts the height in t_fdf.
 ** Returns 1 if Ok.
 */
 
-void	ft_getheight(t_fdf *fdf, char *av)
+int		ft_getheight(char *av)
 {
 	int		fd;
 	int		h;
@@ -56,7 +57,7 @@ void	ft_getheight(t_fdf *fdf, char *av)
 		h++;
 		ft_strdel(&line);
 	}
-	fdf->map.height = h;
+	return (h);
 }
 
 /*
@@ -71,11 +72,11 @@ void	ft_getvalues(t_fdf *fdf, int y, int x, char *line)
 
 	split = ft_strsplit(line, ' ');
 	i = 0;
-	while (split[i] && (y != fdf->map.width))
+	while (split[i] && (x != fdf->map->width))
 	{
-		fdf->map.values[y][x] = ft_atoi(split[i]);
+		fdf->map->values[y][x] = ft_atoi(split[i]);
 		i++;
-		y++;
+		x++;
 	}
 	free(split);
 }
@@ -91,21 +92,35 @@ int		ft_readmap(t_fdf *fdf, char *av)
 	int		fd;
 	char	*line;
 
-	x = 0;
-	y = 0;
-	ft_getheight(fdf, av);
 	if ((fd = open(av, O_RDONLY)) < 0)
 		return (0);
-	fdf->map.values = malloc(sizeof(int *) * fdf->map.height);
-	while (get_next_line(fd, &line) > 0 && y != fdf->map.height)
+	x = 0;
+	y = 0;
+	fdf->map->height = ft_getheight(av);
+	fdf->map->values = malloc(sizeof(int *) * (fdf->map->height));
+	while (get_next_line(fd, &line) == 1)
 	{
 		if (y == 0)
-			fdf->map.width = ft_getwidth(line);
-		fdf->map.values[y] = malloc(sizeof(int) * fdf->map.width);
-		ft_getvalues(fdf, x, y, line);
+			fdf->map->width = ft_getwidth(line);
+		fdf->map->values[y] = malloc(sizeof(int) * (fdf->map->width));
+		ft_getvalues(fdf, y, x, line);
 		x = 0;
 		y++;
 		ft_strdel(&line);
 	}
 	return (1);
+}
+
+void	ft_freeall(t_fdf *fdf)
+{
+	int i;
+
+	i = 0;
+	while (i < fdf->map->height)
+	{
+		free(fdf->map->values[i]);
+		i++;
+	}
+	free(fdf->map);
+	free(fdf);
 }

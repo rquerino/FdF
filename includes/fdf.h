@@ -47,7 +47,7 @@ typedef struct	s_map
 typedef struct	s_fdf
 {
 	t_mlx	mlx;
-	t_map	map;
+	t_map	*map;
 	t_color	color;
 }				t_fdf;
 
@@ -56,9 +56,10 @@ typedef struct	s_fdf
 ** Functions
 */
 
-int	ft_getwidth(char *line);
-void	ft_getheight(t_fdf *fdf, char *av);
+int		ft_getwidth(char *line);
+int		ft_getheight(char *av);
 void	ft_getvalues(t_fdf *fdf, int y, int x, char *line);
 int		ft_readmap(t_fdf *fdf, char *av);
+void	ft_freeall(t_fdf *fdf);
 
 #endif
