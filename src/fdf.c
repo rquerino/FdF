@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rquerino <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:22:13 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/12 09:22:52 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/17 18:56:13 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 #include <stdio.h>
 /*
 ** To compile : cc -I minilibx_macos/ src/fdf.c src/map.c src/fdf.h libft/libft.a 
@@ -23,7 +23,7 @@
 ** For bonus, ANY other functions if justified.
 */
 
-
+/*
 void    ft_minilibx(void *mlx_ptr, t_point size)
 {
     int px;
@@ -38,19 +38,19 @@ void    ft_minilibx(void *mlx_ptr, t_point size)
 
 
 }
-
-void    ft_printmap(int **map)
+*/
+void    ft_printvalues(t_fdf *fdf)
 {
     int i;
     int j;
 
     i = 0;
     j = 0;
-    while (map[i])
+    while (fdf->map.values[i])
     {
-        while (map[i][j])
+        while (fdf->map.values[i][j])
         {
-            printf("%d ", map[i][j]);
+            printf("%d ", fdf->map.values[i][j]);
             j++;
         }
         j = 0;
@@ -59,33 +59,18 @@ void    ft_printmap(int **map)
     }
 }
 
-int     main(int argc, char **argv)
+int     main(int ac, char **av)
 {
-    //void *mlx_ptr;
-    int fd;
-    int **map;
-    //t_point size;
+    t_fdf *fdf;
 
-    if (argc == 2)
+    if (ac == 2)
     {
-        map = NULL;
-        /*
-        if (fd != -1)
-        {
-            fd = open(argv[1], O_RDONLY);
-            map = ft_readmap(fd);
-            //size = malloc(sizeof(size));
-            size = ft_mapsize(values);
-            ft_printvalues(values);
-            mlx_ptr = mlx_init();
-            ft_minilibx(mlx_ptr, values, size);
-        } */
-        fd = open(argv[1], O_RDONLY);
-        map = ft_readmap(fd, map);
-        ft_printmap(map);
+        fdf = malloc(sizeof(fdf));
+        ft_readmap(fdf, av[1]);
+        ft_printvalues(fdf);
+
     }
     else
         ft_putstr("Please use a valid file.\n");
-    
     return (0);
 }

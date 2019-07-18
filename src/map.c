@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rquerino <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:42:27 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/12 09:42:30 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/17 19:39:33 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,73 @@ int	ft_getwidth(char *line)
 
 /*
 ** Function that counts how many lines in the map.
-** Returns the height.
+** Puts the height in t_fdf.
+** Returns 1 if Ok.
 */
 
-int	ft_getheight(t_fdf *fdf, char *av)
+void	ft_getheight(t_fdf *fdf, char *av)
 {
 	int		fd;
-	int		height;
+	int		h;
 	char	*line;
-	int		count_nbr;
-
-	if ((fd = open(av, O_RDONLY)) < 0)
-		return (0);
-	height = 0;
-	while (get_next_line(fd, &line) == 1)
+	
+	h = 0;
+	fd = open(av, O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
 	{
-		height++;
+		h++;
 		ft_strdel(&line);
 	}
-	return (height);
+	fdf->map.height = h;
 }
 
-void	ft_getvalues(t_fdf *fdf, char *line)
-{
-	
+/*
+** Function that splits the line read by gnl and
+** store all the values.
+*/
 
+void	ft_getvalues(t_fdf *fdf, int y, int x, char *line)
+{
+	int		i;
+	char	**split;
+
+	split = ft_strsplit(line, ' ');
+	i = 0;
+	while (split[i] && (y != fdf->map.width))
+	{
+		fdf->map.values[y][x] = ft_atoi(split[i]);
+		i++;
+		y++;
+	}
+	free(split);
+}
+
+/*
+** Function to read map and get values. Call all other functions.
+** Returns 1 if ok
+*/
+int		ft_readmap(t_fdf *fdf, char *av)
+{
+	int		x; // ->
+	int		y; // \/
+	int		fd;
+	char	*line;
+
+	x = 0;
+	y = 0;
+	ft_getheight(fdf, av);
+	if ((fd = open(av, O_RDONLY)) < 0)
+		return (0);
+	fdf->map.values = malloc(sizeof(int *) * fdf->map.height);
+	while (get_next_line(fd, &line) > 0 && y != fdf->map.height)
+	{
+		if (y == 0)
+			fdf->map.width = ft_getwidth(line);
+		fdf->map.values[y] = malloc(sizeof(int) * fdf->map.width);
+		ft_getvalues(fdf, x, y, line);
+		x = 0;
+		y++;
+		ft_strdel(&line);
+	}
+	return (1);
 }

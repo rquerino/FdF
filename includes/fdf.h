@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rquerino <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:25:36 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/12 09:27:56 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/17 18:51:11 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ typedef struct	s_fdf
 ** Functions
 */
 
-int     **ft_readmap(int fd, int **map);
-t_point     ft_mapsize(char **values);
+int	ft_getwidth(char *line);
+void	ft_getheight(t_fdf *fdf, char *av);
+void	ft_getvalues(t_fdf *fdf, int y, int x, char *line);
+int		ft_readmap(t_fdf *fdf, char *av);
+
 #endif
