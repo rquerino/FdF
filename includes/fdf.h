@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:25:36 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/17 18:51:11 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/18 21:53:35 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <math.h>
+# include <time.h>
 
-# define WIDTH = 1920
-# define HEIGHT = 1080
+# define WIDTH		(1366)
+# define HEIGHT		(768)
 
 typedef struct	s_mlx
 {
@@ -47,7 +49,7 @@ typedef struct	s_map
 typedef struct	s_fdf
 {
 	t_mlx	mlx;
-	t_map	*map;
+	t_map	map;
 	t_color	color;
 }				t_fdf;
 
@@ -56,8 +58,8 @@ typedef struct	s_fdf
 ** Functions
 */
 
-int		ft_getwidth(char *line);
-int		ft_getheight(char *av);
+int		ft_countnumbers(char *line);
+void	ft_getheightwidth(t_fdf *fdf, char *av);
 void	ft_getvalues(t_fdf *fdf, int y, int x, char *line);
 int		ft_readmap(t_fdf *fdf, char *av);
 void	ft_freeall(t_fdf *fdf);

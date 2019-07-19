@@ -6,12 +6,12 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:22:13 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/17 18:56:13 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/07/19 09:54:02 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include <stdio.h>
+
 /*
 ** To compile : cc -I minilibx_macos/ src/fdf.c src/map.c src/fdf.h libft/libft.a 
 ** -L minilibx_macos/ -lmlx -framework OpenGL -framework AppKit
@@ -23,22 +23,19 @@
 ** For bonus, ANY other functions if justified.
 */
 
-/*
-void    ft_minilibx(void *mlx_ptr, t_point size)
+void    ft_keys()
 {
-    int px;
-    int py;
-
-    px = 0;
-    py = 0;
-    void *win_ptr;
-    win_ptr = mlx_new_window(mlx_ptr, size.x * 2, size.y * 2, "map");
-    while (px++ <= size.x && py++ <= size.y)
-        mlx_pixel_put(mlx_ptr, 10 + win_ptr, 10 + px, 10 + py, 0xFFFFFF);
-
-
+    ft_putstr("key pressed\n");
 }
-*/
+
+void    ft_originalmap(t_fdf *fdf)
+{
+    fdf->color.R = 0;
+    fdf->color.G = 255;
+    fdf->color.B = 0;
+}
+
+
 void    ft_printvalues(t_fdf *fdf)
 {
     int i;
@@ -50,7 +47,7 @@ void    ft_printvalues(t_fdf *fdf)
     {
         while (j < 18)
         {
-            printf("%02d ,", fdf->map->values[i][j]);
+            printf("%02d ,", fdf->map.values[i][j]);
             j++;
         }
         j = 0;
@@ -66,10 +63,13 @@ int     main(int ac, char **av)
     if (ac == 2)
     {
         fdf = malloc(sizeof(t_fdf));
-        fdf->map = malloc(sizeof(t_map));
         ft_readmap(fdf, av[1]);
         ft_printvalues(fdf);
-        printf("width: %d, height: %d\n", fdf->map->width, fdf->map->height);
+        printf("width: %d, height: %d\n", fdf->map.width, fdf->map.height);
+        fdf->mlx.init = mlx_init();
+        fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIDTH, HEIGHT, "FdF");
+        mlx_loop(fdf->mlx.init);
+        mlx_hook(fdf->mlx.win, 2, 3, ft_keys, fdf);
         ft_freeall(fdf);
     }
     else
