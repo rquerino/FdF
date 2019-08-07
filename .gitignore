@@ -2,3 +2,5 @@
 *.swp
 .nfs*
 *.o
+*.a
+*.out

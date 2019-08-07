@@ -6,7 +6,7 @@
 #    By: rquerino <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/11 16:57:46 by rquerino          #+#    #+#              #
-#    Updated: 2019/07/12 10:33:14 by rquerino         ###   ########.fr        #
+#    Updated: 2019/07/18 20:24:51 by rquerino         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,7 @@ FILES = ft_atoi.c \
 		ft_final_spaces.c \
 		ft_word_count.c \
 		ft_word_length.c \
-		get_next_line.c \
-		ft_getnbr.c
+		get_next_line.c
 OBJ =	$(FILES:%.c=%.o)
 
 all : $(NAME)

@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 22:42:23 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/06 16:29:26 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/07 14:50:07 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void    ft_bresenham(t_fdf *fdf)
 	dy /= unitvector;
 	while (unitvector > 0)
 	{
-		//put_pixel(fdf, y, z, uvector);
         mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, x, y, fdf->map.color);
 		x += dx;
 		y += dy;
@@ -83,7 +82,7 @@ void    ft_bresenham(t_fdf *fdf)
 **
 */
 
-void    ft_drawvertical(t_fdf *fdf, int y, int x)
+void    ft_verticalline(t_fdf *fdf, int y, int x)
 {
     int xt;
     int yt;
@@ -111,7 +110,7 @@ void    ft_drawvertical(t_fdf *fdf, int y, int x)
 **
 */
 
-void    ft_drawhorizontal(t_fdf *fdf, int y, int x)
+void    ft_horizontalline(t_fdf *fdf, int y, int x)
 {
     int xt;
     int yt;
@@ -146,9 +145,9 @@ int     ft_drawmap(t_fdf *fdf)
             fdf->map.x0 = x;
             fdf->map.y0 = y;
             if (fdf->map.width > x + 1)
-                ft_drawhorizontal(fdf, y, x);
+                ft_horizontalline(fdf, y, x);
             if (fdf->map.height > y + 1)
-                ft_drawvertical(fdf, y, x);
+                ft_verticalline(fdf, y, x);
             x++;
         }
         y++;

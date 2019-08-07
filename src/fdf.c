@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:22:13 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/06 16:44:27 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/07 15:29:16 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,54 +23,7 @@ cc -I minilibx_macos/ src/fdf.c src/map.c src/draw.c includes/fdf.h libft/libft.
 ** For bonus, ANY other functions if justified.
 */
 
-static void	ft_color(t_fdf *fdf)
-{
-	fdf->map.color = (rand() % 0xFFFFFF);
-}
 
-void    ft_createmap(t_fdf *fdf)
-{
-    fdf->map.coord_x = 0; //650;
-    fdf->map.coord_y = 0; //40;
-    fdf->map.z_multiplier = 1.00; //For the increase/decrease on Z axis(values)
-	fdf->map.angle_x = cos(0.523599); //cos(PI / 3); //0.5
-	fdf->map.angle_y = sin(0.523599); //fdf->map.angle_x * sin(PI / 6); //0.5 * 0.5 = 0.25
-	if (ceil((fdf->map.width > fdf->map.height)))
-		fdf->map.scale = WIDTH / fdf->map.width;
-	else
-		fdf->map.scale = HEIGHT / fdf->map.height;	
-	fdf->map.camera = 1;
-    fdf->map.color = 0xFFFFFF;
-}
-
-static int	ft_funcs(int key, t_fdf *fdf)
-{
-	if (key == KEY_ESC)
-		exit(0);
-	else if (key == KEY_ANSI_R)
-		ft_createmap(fdf);
-	else if (key == KEY_ANSI_M)
-		ft_color(fdf);
-	else if (key == KEY_ANSI_W)
-		fdf->map.coord_y -= 5;
-	else if (key == KEY_ANSI_A)
-		fdf->map.coord_x += 5;
-	else if (key == KEY_ANSI_S)
-		fdf->map.coord_y += 5;
-	else if (key == KEY_ANSI_D)
-		fdf->map.coord_x -= 5;
-	else if (key == KEY_ANSI_EQUAL)
-		fdf->map.scale += 5;
-	else if ((key == KEY_ANSI_MINUS) && (fdf->map.scale > 5))
-		fdf->map.scale -= 5;
-	else if ((key == KEY_UPARROW) && (fdf->map.z_multiplier < 10))
-		fdf->map.z_multiplier += 0.5;
-	else if ((key == KEY_DOWNARROW) && (fdf->map.z_multiplier > -10))
-		fdf->map.z_multiplier -= 0.5;
-	else if (key == KEY_ANSI_C)
-		fdf->map.angle_y *= (fdf->map.camera++ % 2) ? 0.2 : 5;
-	return (0);
-}
 
 /*
 ** Handle: without parameters, too many parameters, file that doesn't exist.
@@ -89,16 +42,15 @@ int     main(int ac, char **av)
         ft_createmap(fdf);
         fdf->mlx.init = mlx_init();
         fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIDTH, HEIGHT, "FdF");
-		mlx_hook(fdf->mlx.win, 2, 3, ft_keys, fdf);
+		mlx_hook(fdf->mlx.win, 2, 3, ft_funcs, fdf);
         mlx_loop_hook(fdf->mlx.init, ft_drawmap, fdf);
         mlx_loop(fdf->mlx.init);
         ft_freeall(fdf);
     }
     else
-        ft_putstr("Please use a single valid file.\n");
+        ft_putstr("Please use one single valid file.\n");
     return (0);
 }
-
 
 /* FDF CORRECTION
 
