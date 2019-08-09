@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 22:42:23 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/08 20:51:59 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/09 11:44:12 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ void    ft_bresenham(t_fdf *fdf)
     }
 }*/
 
+int		ft_gradienter(t_fdf *fdf, int z0, int z1, int uv)
+{
+	int zstart;
+	int zend;
+
+	zstart = z0 * fdf->z_multiplier;
+	zend = z1 * fdf->z_multiplier;
+	return ((zend - zstart) / (uv % 1));
+}
 
 void    ft_bresenham(t_fdf *fdf, int x0, int x1, int y0, int y1)
 {
@@ -57,9 +66,8 @@ void    ft_bresenham(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	double	dx;
 	double	dy;
 	double	unitvector;
-	int		zmin;
-	int		zmax;
 	int		gradienter;
+	int		z;
 
 	x = fdf->x0;
 	y = fdf->y0;
@@ -68,12 +76,11 @@ void    ft_bresenham(t_fdf *fdf, int x0, int x1, int y0, int y1)
 	unitvector = sqrt((pow(dx, 2)) + (pow(dy, 2)));
 	dx /= unitvector;
 	dy /= unitvector;
-	zmin = fdf->values[y0][x0] != 0 ?  fdf->values[y0][x0] * fdf->z_multiplier : 0;
-	zmax = fdf->values[y1][x1] * fdf->z_multiplier;
+	gradienter = ft_gradienter(fdf, fdf->values[y0][x0], fdf->values[y1][x1], unitvector);
+	z = 0;
 	while (unitvector > 0)
 	{
-		gradienter = zmax - zmin++;
-		fdf->color = ft_getcolor(fdf, gradienter);
+		fdf->color = ft_getcolor(fdf, z += gradienter);
         mlx_pixel_put(fdf->mlx, fdf->win, x, y, fdf->color);
 		x += dx;
 		y += dy;
@@ -144,6 +151,7 @@ int     ft_drawmap(t_fdf *fdf)
 
     y = 0;
     mlx_clear_window(fdf->mlx, fdf->win);
+	ft_zmax(fdf);
     while (y < fdf->height)
     {
         x = 0;

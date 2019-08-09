@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:25:36 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/08 20:50:02 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/09 11:40:16 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void	ft_changecolor(t_fdf *fdf);
 int		ft_funcs(int key, t_fdf *fdf);
 void	ft_changeangle(t_fdf *fdf);
 int		ft_getcolor(t_fdf *fdf, int z);
+void	ft_zmax(t_fdf *fdf);
+int		ft_gradienter(t_fdf *fdf, int z0, int z1, int uv);
 
 #endif

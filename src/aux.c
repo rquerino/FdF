@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:03:03 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/08 20:51:17 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/09 11:44:21 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ int		ft_getcolor(t_fdf *fdf, int z)
     int		blue;
     double	percentage;
 
-    if(z < 0)
+    if (z < 0)
 		z *= -1;
 	else if (z == 0)
 		fdf->color = fdf->colorbase;
-	else if (z > 30)
-		fdf->color = fdf->colorgradient;
-	percentage = z / 30;
+	percentage = z / fdf->zmax;
 	red = get_light((fdf->colorbase >> 16) & 0xFF, (fdf->colorgradient >> 16) & 0xFF, percentage);
 	green = get_light((fdf->colorbase >> 8) & 0xFF, (fdf->colorgradient >> 8) & 0xFF, percentage);
 	blue = get_light(fdf->colorbase & 0xFF, fdf->colorgradient & 0xFF, percentage);
@@ -134,14 +132,14 @@ int		ft_funcs(int key, t_fdf *fdf)
 	else if ((key == MINUS) && (fdf->scale > 10))
 		fdf->scale -= 5;
 	else if ((key == UP) && (fdf->z_multiplier < 15))
-		fdf->z_multiplier += 0.5;
+		fdf->z_multiplier += 1;
 	else if ((key == DOWN) && (fdf->z_multiplier > -15))
-		fdf->z_multiplier -= 0.5;
+		fdf->z_multiplier -= 1;
 	else if (key == C)
 		ft_changeangle(fdf);
 	else if (key == X)
 		ft_changecolor(fdf);
-	else if (key == 53)
+	else if (key == ESC)
 		exit(0);
 	return (1);
 }
