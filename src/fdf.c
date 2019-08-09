@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:22:13 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/07 15:29:16 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/08 16:16:08 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,10 @@ cc -I minilibx_macos/ src/fdf.c src/map.c src/draw.c includes/fdf.h libft/libft.
 ** Allowed for mandatory: open, read, write, close, malloc, free, perror, strerror, exit,
 ** math library (man 3 math) and minilibx library.
 ** For bonus, ANY other functions if justified.
-*/
-
-
-
-/*
 ** Handle: without parameters, too many parameters, file that doesn't exist.
 ** Tests: 0 x 0 map, 4x4 map, 1 value to see the difference in z axis
 ** Test with 42 map, random 16 x 16 map, bigger and heavier maps
+** mlx_hook: 2 is for handling key pressing on x_event, 0 is for x_maks - doesn't work on mac  
 */
 
 int     main(int ac, char **av)
@@ -40,11 +36,11 @@ int     main(int ac, char **av)
         fdf = malloc(sizeof(t_fdf));
         ft_readmap(fdf, av[1]);
         ft_createmap(fdf);
-        fdf->mlx.init = mlx_init();
-        fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIDTH, HEIGHT, "FdF");
-		mlx_hook(fdf->mlx.win, 2, 3, ft_funcs, fdf);
-        mlx_loop_hook(fdf->mlx.init, ft_drawmap, fdf);
-        mlx_loop(fdf->mlx.init);
+        fdf->mlx = mlx_init();
+        fdf->win = mlx_new_window(fdf->mlx, WIDTH, HEIGHT, "FdF");
+		mlx_hook(fdf->win, 2, 0, ft_funcs, fdf);
+        mlx_loop_hook(fdf->mlx, ft_drawmap, fdf);
+        mlx_loop(fdf->mlx);
         ft_freeall(fdf);
     }
     else

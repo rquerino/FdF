@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:42:27 by rquerino          #+#    #+#             */
-/*   Updated: 2019/07/23 11:15:02 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/08 15:42:00 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	ft_getheightwidth(t_fdf *fdf, char *av)
 		h++;
 		ft_strdel(&line);
 	}
-	fdf->map.height = h;
-	fdf->map.width = w;
+	fdf->height = h;
+	fdf->width = w;
 }
 
 /*
@@ -76,9 +76,9 @@ void	ft_getvalues(t_fdf *fdf, int y, int x, char *line)
 
 	split = ft_strsplit(line, ' ');
 	i = 0;
-	while (split[i] && (x != fdf->map.width))
+	while (split[i] && (x != fdf->width))
 	{
-		fdf->map.values[y][x] = ft_atoi(split[i]);
+		fdf->values[y][x] = ft_atoi(split[i]);
 		i++;
 		x++;
 	}
@@ -91,8 +91,8 @@ void	ft_getvalues(t_fdf *fdf, int y, int x, char *line)
 */
 int		ft_readmap(t_fdf *fdf, char *av)
 {
-	int		x; // ->
-	int		y; // \/
+	int		x;
+	int		y;
 	int		fd;
 	char	*line;
 
@@ -101,10 +101,10 @@ int		ft_readmap(t_fdf *fdf, char *av)
 	x = 0;
 	y = 0;
 	ft_getheightwidth(fdf, av);
-	fdf->map.values = malloc(sizeof(int *) * (fdf->map.height));
+	fdf->values = malloc(sizeof(int *) * (fdf->height));
 	while (get_next_line(fd, &line) == 1)
 	{
-		fdf->map.values[y] = malloc(sizeof(int) * (fdf->map.width));
+		fdf->values[y] = malloc(sizeof(int) * (fdf->width));
 		ft_getvalues(fdf, y, x, line);
 		x = 0;
 		y++;
@@ -122,9 +122,9 @@ void	ft_freeall(t_fdf *fdf)
 	int i;
 
 	i = 0;
-	while (i < fdf->map.height)
+	while (i < fdf->height)
 	{
-		free(fdf->map.values[i]);
+		free(fdf->values[i]);
 		i++;
 	}
 	free(fdf);
