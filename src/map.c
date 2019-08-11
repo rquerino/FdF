@@ -6,7 +6,7 @@
 /*   By: rquerino <rquerino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 09:42:27 by rquerino          #+#    #+#             */
-/*   Updated: 2019/08/08 15:42:00 by rquerino         ###   ########.fr       */
+/*   Updated: 2019/08/09 19:40:53 by rquerino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int		ft_countnumbers(char *line)
 	count_nbr = 0;
 	while (line[i])
 	{
-        if (ft_isdigit(line[i]))
+		if (ft_isdigit(line[i]))
 		{
 			count_nbr++;
 			while (ft_isdigit(line[i]))
 				i++;
 		}
-		i++;	
+		i++;
 	}
 	return (count_nbr);
 }
@@ -49,7 +49,7 @@ void	ft_getheightwidth(t_fdf *fdf, char *av)
 	int		h;
 	int		w;
 	char	*line;
-	
+
 	h = 0;
 	w = 0;
 	fd = open(av, O_RDONLY);
@@ -89,6 +89,7 @@ void	ft_getvalues(t_fdf *fdf, int y, int x, char *line)
 ** Function to read map and get values. Call all other functions.
 ** Returns 1 if ok
 */
+
 int		ft_readmap(t_fdf *fdf, char *av)
 {
 	int		x;
